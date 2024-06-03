@@ -1,7 +1,7 @@
 [
     {
         "openai_api_type": "azure",
-        "openai_api_version": "2022-12-01",
+        "openai_api_version": "2024-02-15-preview",
         "openai_max_tokens": 1920,
         "openai_temperature": 0.1,
         "openai_top_p": 1,

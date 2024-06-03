@@ -6,6 +6,15 @@ const multer = require('multer');
 // const azure = require('azure-storage');
 // const speech = require('@azure/cognitiveservices-speech');
 
+const cors = require('cors');
+
+app.use(cors({
+  origin: 'http://localhost:8000',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+
 const  router = express.Router();
 const { BlobServiceClient } = require('@azure/storage-blob');
 
@@ -28,6 +37,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/openai', openaiRouter);
 app.use('/azure/language', azurelanguageRouter);
+
+
 
 app.get('/api/sayhello', (req, res) => {
     const currentDateTime = new Date();    

@@ -1,6 +1,9 @@
 import axios from 'axios';
 import Cookie from 'universal-cookie';
 
+axios.defaults.baseURL = 'http://localhost:8080'; // Set the base URL for Axios
+
+
 export async function getTokenOrRefresh() {
     const cookie = new Cookie();
     const speechToken = cookie.get('speech-token');
@@ -8,7 +11,7 @@ export async function getTokenOrRefresh() {
     if (speechToken === undefined) {
         try {
             console.log('Try getting token from the express backend');
-            const res = await axios.get('/api/get-speech-token');
+            const res = await axios.get('api/get-speech-token');
             const token = res.data.token;
             const region = res.data.region;
             cookie.set('speech-token', region + ':' + token, {maxAge: 540, path: '/'});
@@ -30,7 +33,7 @@ export async function getKeyPhrases(requestText) {
     try{
         //Key Phrase extraction
         const data = {transcript: requestText};
-        const headers = { 'Content-Type': 'application/json' };
+        const headers = { 'Content-Type': 'application/json'};
         const res = await axios.post('/azure/language/ta-key-phrases', data, {headers});  
         return res.data;     
     } catch (err) {       
